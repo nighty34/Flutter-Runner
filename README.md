@@ -1,6 +1,6 @@
-# flutter_game
+# flutter runner
 
-smol gaeme
+Trying to make a endlessrunner without flame
 
 ## Getting Started
 
