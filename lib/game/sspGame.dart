@@ -56,7 +56,7 @@ class SSPEngine extends GameEngine {
   }
 
   jump(){
-    print("Jump");
+    _player!.GetComponent<Movement>().jump();
   }
 
 }
@@ -104,23 +104,21 @@ class SSPView extends GameView{
             width: 200,
             child: ElevatedButton(
               child: Text("Jump"),
-              onPressed: jump(context),
+              onPressed: () => jump(context),
             ),
           ),
           Container(
             height: 10,
             width: 10,
             child: ListView(
-
             ),
-          )
-        ],
+          )],
     );
   }
 
   jump(BuildContext con){
-    GameEngine engine = Provider.of<GameEngine>(con);
-    engine.inputHandler(["Jump"]);
+    GameEngine engine = Provider.of<GameEngine>(con, listen: false);
+    engine.inputHandler(["JUMP"]);
   }
 
 }

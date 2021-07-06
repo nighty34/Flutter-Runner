@@ -35,4 +35,16 @@ class Actor extends StatelessWidget{
   addComponent(base_component component){
     components.add(component);
   }
+
+
+
+  T GetComponent<T>(){
+    var com;
+    components.forEach((component) {
+      if(component.runtimeType==T){
+        com = component;
+      }
+    });
+    return com;
+  }
 }
