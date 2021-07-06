@@ -31,6 +31,11 @@ class Actor extends StatelessWidget{
   }
 
 
+  addComponent(base_component component){
+    components.add(component);
+  }
+
+
 
 
 

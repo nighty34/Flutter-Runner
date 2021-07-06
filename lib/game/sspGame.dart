@@ -2,12 +2,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_game/game/elements/Actor.dart';
+import 'package:flutter_game/game/components/movement_component.dart';
 import 'package:flutter_game/game/game_core.dart';
 import 'package:provider/provider.dart';
 
+import 'elements/Actor.dart';
+
 
 class SSPEngine extends GameEngine {
+
+  List _allActors = List.empty();
+
   @override
   void stateChanged(GameState oldState, GameState newState) {
     // TODO: implement stateChanged
@@ -16,10 +21,21 @@ class SSPEngine extends GameEngine {
   @override
   void updatePhysics(int tickCounter) {
     // TODO: implement updatePhysics
+    if(tickCounter==0){
+      print("Start");
+    }
     super.updatePhysics(tickCounter);
+  }
+
+
+
+  List createActors(){
+    var actors = List.empty();
     Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
+    mainActor.addComponent(new Movement(mainActor));
 
-
+    actors.add(mainActor);
+    return actors;
   }
 
 
@@ -62,17 +78,7 @@ class SSPView extends GameView{
 
     return Stack(
       children: [
-        Actor(Offset(1, 1), "graphics/actor.png", 200), //Add Actors based on Gameengine
-        Actor(Offset(1, -1), "graphics/actor.png", 200),
-        Actor(Offset(-1, 1), "graphics/actor.png", 200),
-        Container(
-          height: 100,
-          width: 100,
-          child: ElevatedButton(
-            child: Text("Jump"),
-            onPressed: jump,
-          ),
-        )
+
       ],
     );
   }
