@@ -11,7 +11,7 @@ import 'elements/Actor.dart';
 
 class SSPEngine extends GameEngine {
 
-
+  Actor? _player;
 
   @override
   void stateChanged(GameState oldState, GameState newState) {
@@ -30,14 +30,24 @@ class SSPEngine extends GameEngine {
 
 
 
-  List createActors(){
-    var actors = List.empty();
+  List<StatelessWidget> createActors(){
+    List<StatelessWidget> actors = [];
     Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
     mainActor.addComponent(new Movement(mainActor));
 
     actors.add(mainActor);
+    _player = mainActor;
     return actors;
   }
+
+  jump(){
+
+  }
+
+
+
+
+
 
 
 
@@ -79,8 +89,30 @@ class SSPView extends GameView{
     GameEngine engine = Provider.of<GameEngine>(context);
 
     return Stack(
-      children: engine.AllActors,
+        children: [Stack(
+          children: engine.AllActors,
+        ),
+          Container(
+            height: 200,
+            width: 200,
+            child: ElevatedButton(
+              child: Text("Jump"),
+              onPressed: jump,
+            ),
+          ),
+          Container(
+            height: 200,
+            width: 200,
+            child: ListView(
+
+            ),
+          )
+        ],
     );
+  }
+
+  jump(){
+    print("jump");
   }
 
 }

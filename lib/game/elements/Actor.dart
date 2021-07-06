@@ -7,10 +7,11 @@ class Actor extends StatelessWidget{
   Offset offset;
   String spritePath;
   double size;
+  String? name;
 
-  List<base_component> components;
+  List<base_component?> components;
 
-  Actor(this.offset, this.spritePath, this.size) : components = List.empty();
+  Actor(this.offset, this.spritePath, this.size) : components = [];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class Actor extends StatelessWidget{
   }
 
   update(){
-    components.forEach((element) {element.update();});
+    components.forEach((element) {element?.update();});
     //TODO: Actor Loop - put into Abstract parent class
   }
 
@@ -34,9 +35,4 @@ class Actor extends StatelessWidget{
   addComponent(base_component component){
     components.add(component);
   }
-
-
-
-
-
 }
