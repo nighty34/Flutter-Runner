@@ -17,6 +17,9 @@ class SSPEngine extends GameEngine {
   void updatePhysics(int tickCounter) {
     // TODO: implement updatePhysics
     super.updatePhysics(tickCounter);
+    Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
+
+
   }
 
 
@@ -27,6 +30,7 @@ class SSPEngine extends GameEngine {
 class SSPView extends GameView{
 
   SSPView(String title) : super(title);
+
 
   @override
   getEndOfGamePageContent(BuildContext context){
@@ -54,12 +58,23 @@ class SSPView extends GameView{
 
   @override
   Widget getRunningPageContent(BuildContext context) {
+
+
     return Stack(
       children: [
-        Actor(Offset(1, 1), "graphics/actor.png", 200),
+        Actor(Offset(1, 1), "graphics/actor.png", 200), //Add Actors based on Gameengine
         Actor(Offset(1, -1), "graphics/actor.png", 200),
-        Actor(Offset(-1, 1), "graphics/actor.png", 200)
+        Actor(Offset(-1, 1), "graphics/actor.png", 200),
+        Container(
+          height: 100,
+          width: 100,
+          child: ElevatedButton(
+            child: Text("Jump"),
+            onPressed: jump,
+          ),
+        )
       ],
     );
   }
+
 }
