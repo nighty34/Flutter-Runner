@@ -16,8 +16,6 @@ class Game {
 abstract class GameView extends StatelessWidget{
 
 
-
-
   Widget getStartPageConent(BuildContext context);
   Widget getRunningPageContent(BuildContext context);
   Widget getEndOfGamePageContent(BuildContext context);

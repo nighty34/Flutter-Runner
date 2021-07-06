@@ -21,16 +21,13 @@ class SSPEngine extends GameEngine {
   @override
   void updatePhysics(int tickCounter) {
     super.updatePhysics(tickCounter);
-    // TODO: implement updatePhysics
     if(tickCounter==1){
       print("Start");
       createActors().forEach((element) {addActor(element);});
     }
-
-
   }
 
-
+ //Weird way of handeling Inputs... hope it works
   @override
   void inputHandler(List<String> commands) {
     commands.forEach((cmd) {
@@ -47,6 +44,7 @@ class SSPEngine extends GameEngine {
     });
   }
 
+  //Spawn all the objects I need for the game
   List<Actor> createActors(){
     List<Actor> actors = [];
     Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
@@ -57,6 +55,7 @@ class SSPEngine extends GameEngine {
     return actors;
   }
 
+  //jump
   jump(){
     _player!.GetComponent<Movement>().jump();
   }
@@ -96,7 +95,6 @@ class SSPView extends GameView{
   @override
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
-    rebuildAllChildren(context);
     return Stack(
         children: [Stack(
           children: engine.AllActors,
@@ -118,14 +116,7 @@ class SSPView extends GameView{
     );
   }
 
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-    (context as Element).visitChildren(rebuild);
-  }
-
+  //jump again - View
   jump(BuildContext con){
     GameEngine engine = Provider.of<GameEngine>(con, listen: false);
     engine.inputHandler(["JUMP"]);
