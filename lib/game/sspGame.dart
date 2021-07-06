@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_game/game/components/movement_component.dart';
+import 'package:flutter_game/game/components/paralax_component.dart';
 import 'package:flutter_game/game/game_core.dart';
 import 'package:provider/provider.dart';
 
@@ -47,11 +48,18 @@ class SSPEngine extends GameEngine {
   //Spawn all the objects I need for the game
   List<Actor> createActors(){
     List<Actor> actors = [];
-    Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
-    mainActor.addComponent(new Movement(mainActor));
 
+    Actor backgroundLayer = Actor(Offset(0,0.5), "graphics/cloudLayer.png", 600); //BackgroundLayer
+    backgroundLayer.addComponent(new Paralax(backgroundLayer, 0.02));
+    actors.add(backgroundLayer);
+
+
+    Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200); //PLAYER
+    mainActor.addComponent(new Movement(mainActor));
     actors.add(mainActor);
     _player = mainActor;
+
+
     return actors;
   }
 
@@ -96,7 +104,9 @@ class SSPView extends GameView{
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
     return Stack(
+      clipBehavior: Clip.none,
         children: [Stack(
+          clipBehavior: Clip.none,
           children: engine.AllActors,
         ),
           Container(

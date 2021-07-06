@@ -33,6 +33,7 @@ class Movement extends base_component{
     //Jumping
     if(isJumping){
       timeLastJump++;
+      print(parent.offset.dy);
       if(timeLastJump<=maxJumpTime){ //Check for highest point
         double velocity = (maxJumpTime-timeLastJump)/jumpDivider; //slowly decrease velocity
         parent.offset = Offset(parent.offset.dx, parent.offset.dy + velocity);

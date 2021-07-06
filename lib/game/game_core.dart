@@ -88,7 +88,7 @@ abstract class GameEngine extends ChangeNotifier{
   void _startGameLoop() {
     _stopGameLoop();
     _tickCounter = 0;
-    _timer = new Timer.periodic(Duration(milliseconds: 20), _processTick);
+    _timer = new Timer.periodic(Duration(milliseconds: 30), _processTick);
   }
 
   void _stopGameLoop() {

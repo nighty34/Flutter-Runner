@@ -12,6 +12,11 @@ class Actor extends StatelessWidget{
   String spritePath;
   double size;
   String? name; //TODO: Optional?
+  bool _repeatImg = false;
+  bool _clipImg = true;
+
+
+
 
   List<base_component?> _components;
 
@@ -22,17 +27,28 @@ class Actor extends StatelessWidget{
     return Align(
       alignment: Alignment(offset.dx, offset.dy), //Position of object
       child: Container( //Size of Object
+        clipBehavior: Clip.none,
         height: size,
         width: size,
-        child: Image(image: AssetImage(spritePath)),
+        child: Image(image: AssetImage(spritePath),repeat: _repeatImg ? ImageRepeat.repeatX : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
       ),
     );
   }
 
-  //Classic update function
+  void setRepeatImg(bool repeat) {
+    _repeatImg = repeat;
+  }
+
+  void setClipping(bool clip){
+
+  }
+
+
+   //Classic update function
   update(){
     _components.forEach((element) {element?.update();});
     //TODO: Actor Loop - put into Abstract parent class
+    new ActorNotifyer();
   }
 
   //Add Components via Code
@@ -50,5 +66,12 @@ class Actor extends StatelessWidget{
       }
     });
     return com;
+  }
+}
+
+
+class ActorNotifyer extends ChangeNotifier{
+  ActorNotifyer(){
+    notifyListeners();
   }
 }
