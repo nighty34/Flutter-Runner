@@ -96,7 +96,7 @@ class SSPView extends GameView{
   @override
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
-
+    rebuildAllChildren(context);
     return Stack(
         children: [Stack(
           children: engine.AllActors,
@@ -116,6 +116,14 @@ class SSPView extends GameView{
             ),
           )],
     );
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (context as Element).visitChildren(rebuild);
   }
 
   jump(BuildContext con){
