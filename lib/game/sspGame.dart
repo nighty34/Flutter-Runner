@@ -49,8 +49,8 @@ class SSPEngine extends GameEngine {
   List<Actor> createActors(){
     List<Actor> actors = [];
 
-    Actor backgroundLayer = Actor(Offset(0,0.5), "graphics/cloudLayer.png", 600); //BackgroundLayer
-    backgroundLayer.addComponent(new Paralax(backgroundLayer, 0.02));
+    Actor backgroundLayer = Actor(Offset(0,0.5), "graphics/cloudLayer.png", 500); //BackgroundLayer
+    backgroundLayer.addComponent(new Paralax(backgroundLayer, 200));
     actors.add(backgroundLayer);
 
 
