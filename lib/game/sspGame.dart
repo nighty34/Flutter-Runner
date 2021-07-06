@@ -29,9 +29,24 @@ class SSPEngine extends GameEngine {
   }
 
 
+  @override
+  void inputHandler(List<String> commands) {
+    commands.forEach((cmd) {
+      switch(cmd){
+        case "JUMP":
+          jump();
+          break;
+        case "RIGHT":
+          break;
 
-  List<StatelessWidget> createActors(){
-    List<StatelessWidget> actors = [];
+        default:
+          return;
+      }
+    });
+  }
+
+  List<Actor> createActors(){
+    List<Actor> actors = [];
     Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200);
     mainActor.addComponent(new Movement(mainActor));
 
@@ -41,16 +56,8 @@ class SSPEngine extends GameEngine {
   }
 
   jump(){
-
+    print("Jump");
   }
-
-
-
-
-
-
-
-
 
 }
 
@@ -97,12 +104,12 @@ class SSPView extends GameView{
             width: 200,
             child: ElevatedButton(
               child: Text("Jump"),
-              onPressed: jump,
+              onPressed: jump(context),
             ),
           ),
           Container(
-            height: 200,
-            width: 200,
+            height: 10,
+            width: 10,
             child: ListView(
 
             ),
@@ -111,8 +118,9 @@ class SSPView extends GameView{
     );
   }
 
-  jump(){
-    print("jump");
+  jump(BuildContext con){
+    GameEngine engine = Provider.of<GameEngine>(con);
+    engine.inputHandler(["Jump"]);
   }
 
 }

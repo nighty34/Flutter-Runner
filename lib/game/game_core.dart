@@ -64,13 +64,12 @@ abstract class GameEngine extends ChangeNotifier{
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
 
-  List<StatelessWidget> _allActors = [];
+  List<Actor> _allActors = [];
   get AllActors => _allActors;
 
-  addActor(StatelessWidget actor){
+  addActor(Actor actor){
     _allActors.add(actor);
   }
-
 
   void stateChanged(GameState oldState, GameState newState);
 
@@ -110,6 +109,10 @@ abstract class GameEngine extends ChangeNotifier{
 
 
   void updatePhysics(int tickCounter){
+
+  }
+
+  void inputHandler(List<String> commands){
 
   }
 

@@ -9,5 +9,4 @@ abstract class base_component{
   update();
 
 
-
 }
