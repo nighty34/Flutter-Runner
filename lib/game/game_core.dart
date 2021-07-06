@@ -104,6 +104,9 @@ abstract class GameEngine extends ChangeNotifier{
   void _processTick(dynamic notUsed){
       ++_tickCounter;
       updatePhysics(_tickCounter);
+      _allActors.forEach((actor) {
+        actor.update();
+      });
   }
 
 

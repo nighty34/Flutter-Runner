@@ -20,12 +20,14 @@ class SSPEngine extends GameEngine {
 
   @override
   void updatePhysics(int tickCounter) {
+    super.updatePhysics(tickCounter);
     // TODO: implement updatePhysics
     if(tickCounter==1){
       print("Start");
       createActors().forEach((element) {addActor(element);});
     }
-    super.updatePhysics(tickCounter);
+
+
   }
 
 

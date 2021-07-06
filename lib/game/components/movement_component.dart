@@ -29,7 +29,6 @@ class Movement extends base_component{
   }
 
   jump(){
-    print("Jump");
     if(isJumping){
       return;
     }else{
