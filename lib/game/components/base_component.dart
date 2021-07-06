@@ -4,7 +4,7 @@ abstract class base_component{
 
   Actor parent;
 
-  base_component(this._parent);
+  base_component(this.parent);
 
   update();
 

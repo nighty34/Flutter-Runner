@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_game/game/elements/Actor.dart';
 import 'package:provider/provider.dart';
 
 class Game {
@@ -13,6 +14,9 @@ class Game {
 
 
 abstract class GameView extends StatelessWidget{
+
+
+
 
   Widget getStartPageConent(BuildContext context);
   Widget getRunningPageContent(BuildContext context);
@@ -59,6 +63,13 @@ abstract class GameEngine extends ChangeNotifier{
   GameState _gameState;
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
+
+  List _allActors = List.empty();
+  get AllActors => _allActors;
+
+  addActor(Actor actor){
+    _allActors.add(actor);
+  }
 
 
   void stateChanged(GameState oldState, GameState newState);

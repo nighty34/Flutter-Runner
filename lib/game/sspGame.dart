@@ -11,7 +11,7 @@ import 'elements/Actor.dart';
 
 class SSPEngine extends GameEngine {
 
-  List _allActors = List.empty();
+
 
   @override
   void stateChanged(GameState oldState, GameState newState) {
@@ -21,8 +21,9 @@ class SSPEngine extends GameEngine {
   @override
   void updatePhysics(int tickCounter) {
     // TODO: implement updatePhysics
-    if(tickCounter==0){
+    if(tickCounter==1){
       print("Start");
+      createActors().forEach((element) {addActor(element);});
     }
     super.updatePhysics(tickCounter);
   }
@@ -37,6 +38,7 @@ class SSPEngine extends GameEngine {
     actors.add(mainActor);
     return actors;
   }
+
 
 
 
@@ -74,12 +76,10 @@ class SSPView extends GameView{
 
   @override
   Widget getRunningPageContent(BuildContext context) {
-
+    GameEngine engine = Provider.of<GameEngine>(context);
 
     return Stack(
-      children: [
-
-      ],
+      children: engine.AllActors,
     );
   }
 
