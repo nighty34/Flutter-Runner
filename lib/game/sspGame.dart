@@ -56,7 +56,9 @@ class SSPView extends GameView{
   Widget getRunningPageContent(BuildContext context) {
     return Stack(
       children: [
-          Actor(Offset(0, 0), "graphics/actor.png", 1)
+        Actor(Offset(1, 1), "graphics/actor.png", 200),
+        Actor(Offset(1, -1), "graphics/actor.png", 200),
+        Actor(Offset(-1, 1), "graphics/actor.png", 200)
       ],
     );
   }
