@@ -56,7 +56,7 @@ enum GameState {
   waitForStart, running, endOfGame
 }
 
-abstract class GameEngine extends ChangeNotifier{
+abstract class GameEngine with ChangeNotifier{
   Timer? _timer;
   GameState _gameState;
   int _tickCounter;
@@ -81,14 +81,13 @@ abstract class GameEngine extends ChangeNotifier{
     }else{
       _stopGameLoop();
     }
-
     updateView();
   }
 
   void _startGameLoop() {
     _stopGameLoop();
     _tickCounter = 0;
-    _timer = new Timer.periodic(Duration(milliseconds: 30), _processTick);
+    _timer = new Timer.periodic(Duration(milliseconds: 60), _processTick);
   }
 
   void _stopGameLoop() {
@@ -103,7 +102,7 @@ abstract class GameEngine extends ChangeNotifier{
       ++_tickCounter;
       updatePhysics(_tickCounter);
       _allActors.forEach((actor) {
-        actor.brain?.update();
+        actor.brain.update();
       });
   }
 

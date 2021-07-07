@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_game/game/components/movement_component.dart';
@@ -24,8 +26,11 @@ class SSPEngine extends GameEngine {
     super.updatePhysics(tickCounter);
     if(tickCounter==1){
       print("Start");
+
       createActors().forEach((element) {addActor(element);});
     }
+    _player?.offset = Offset(0, tickCounter + 0);
+    updateView();
   }
 
  //Weird way of handeling Inputs... hope it works
@@ -47,23 +52,27 @@ class SSPEngine extends GameEngine {
 
   //Spawn all the objects I need for the game
   List<ActorWidget> createActors(){
+
+
+
     List<ActorWidget> actors = [];
 
-    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/cloudLayer.png", 500, name: "BackGround"); //BackgroundLayer
-    backgroundLayer.brain?.addComponent(new Paralax(backgroundLayer.brain!, 200));
-    actors.add(backgroundLayer);
+    /*ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/background.png", 500, name: "BackGround"); //BackgroundLayer
+    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, 200));
+    actors.add(backgroundLayer);*/
 
-    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200, name: "Player"); //PLAYER
-    mainActor.brain?.addComponent(new Movement(mainActor.brain!));
+    ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
+    mainActor.brain.addComponent(new Movement(mainActor.brain));
     actors.add(mainActor);
     _player = mainActor.brain;
 
     return actors;
   }
 
+
+
   //jump
   jump(){
-    print(_player);
     _player?.GetComponent<Movement>().jump();
   }
 
@@ -98,13 +107,15 @@ class SSPView extends GameView{
         ));
   }
 
+  BuildContext? _context;
+
   @override
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
+    _context = context;
+    new Timer.periodic(Duration(milliseconds: 60), rebuildAllChildren);
     return Stack(
-      clipBehavior: Clip.none,
         children: [Stack(
-          clipBehavior: Clip.none,
           children: engine.AllActors,
         ),
           Container(
@@ -112,7 +123,7 @@ class SSPView extends GameView{
             width: 200,
             child: ElevatedButton(
               child: Text("Jump"),
-              onPressed: () => jump(context),
+              onPressed: () => {jump(context)},
             ),
           ),
           Container(
@@ -121,6 +132,7 @@ class SSPView extends GameView{
             child: ListView(
             ),
           )],
+
     );
   }
 
@@ -128,6 +140,16 @@ class SSPView extends GameView{
   jump(BuildContext con){
     GameEngine engine = Provider.of<GameEngine>(con, listen: false);
     engine.inputHandler(["JUMP"]);
+    rebuildAllChildren(con);
+  }
+
+  void rebuildAllChildren(dynamic notused) {
+    BuildContext? context = this._context;
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (context as Element).visitChildren(rebuild);
   }
 
 }

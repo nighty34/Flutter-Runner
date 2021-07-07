@@ -21,11 +21,21 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: game.gameEngine,
       child: MaterialApp(
-      title: title,
-      theme: ThemeData(
+        debugShowCheckedModeBanner: false,
+        title: title,
+        theme: ThemeData(
 
-        primarySwatch: Colors.blue,
-      ),
-      home: game.gameView,));
+          primarySwatch: Colors.blue,
+        ),
+      home: game.gameView,)
+    );
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+    (context as Element).visitChildren(rebuild);
   }
 }

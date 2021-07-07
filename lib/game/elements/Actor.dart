@@ -1,6 +1,8 @@
+
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_game/game/components/base_component.dart';
 
 
@@ -8,30 +10,35 @@ import 'package:flutter_game/game/components/base_component.dart';
  * Master-Class for all the objects on the playingfield - planning on adding an additonal abstract layer infront of this class
  */
 class Actor extends State<ActorWidget>{
-  Offset offset;
   String spritePath;
   double size;
   String? name; //TODO: Optional?
   bool _repeatImg = false;
   bool _clipImg = true;
+  Offset _offset;
 
   int frame = 0;
 
 
+  Offset get offset => _offset;
 
+  set offset(Offset value) {
+    _offset = value;
+  }
 
   List<base_component?> _components;
 
-  Actor(this.offset, this.spritePath, this.size, {this.name = ""}) : _components = [];
+  Actor(this._offset, this.spritePath, this.size, {this.name = ""}) : _components = [];
 
 
   @override
   Widget build(BuildContext context) {
-    //print("${name}: ${offset}");
-    return Align(
-      alignment: Alignment(offset.dx, offset.dy), //Position of object
+    return Positioned(
+      top: _offset.dy,
+      left: _offset.dx,
       child: Container( //Size of Object
         clipBehavior: Clip.none,
+        color: Colors.green,
         height: size,
         width: size,
         child: Image(image: AssetImage(spritePath),repeat: _repeatImg ? ImageRepeat.repeatX : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
@@ -50,12 +57,8 @@ class Actor extends State<ActorWidget>{
 
    //Classic update function
   update(){
-    _components.forEach((element) {element?.update();});
+    _components.forEach((comp) {comp?.update();});
     //TODO: Actor Loop - put into Abstract parent class
-    setState(() {
-      frame++;
-      offset = Offset(offset.dx, offset.dy);
-    });
   }
 
   //Add Components via Code
@@ -98,13 +101,6 @@ class ActorWidget extends StatefulWidget{
       this.brain = _brain;
       print("Brain null");
     }
-    return brain!;
-  }
-}
-
-
-class ActorNotifyer extends ChangeNotifier{
-  ActorNotifyer(){
-    notifyListeners();
+    return brain;
   }
 }

@@ -6,8 +6,8 @@ class Movement extends base_component{
   bool isJumping = false;
   bool isOnGround = false;
   int timeLastJump = 0;
-  static const int maxJumpTime = 20;
-  static const double jumpDivider = 50;
+  static const int maxJumpTime = 60;
+  static const double jumpDivider = 20;
   static const double fallingSpeed = -0.2;
 
   /**
@@ -32,9 +32,7 @@ class Movement extends base_component{
 
     //Jumping
     if(isJumping){
-      print("Jump");
       timeLastJump++;
-      print(parent.offset.dy);
       if(timeLastJump<=maxJumpTime){ //Check for highest point
         double velocity = (maxJumpTime-timeLastJump)/jumpDivider; //slowly decrease velocity
         parent.offset = Offset(parent.offset.dx, parent.offset.dy + velocity);
