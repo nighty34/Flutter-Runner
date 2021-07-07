@@ -7,7 +7,7 @@ import 'package:flutter_game/game/components/base_component.dart';
 /**
  * Master-Class for all the objects on the playingfield - planning on adding an additonal abstract layer infront of this class
  */
-class Actor extends StatelessWidget{
+class Actor extends State<ActorWidget>{
   Offset offset;
   String spritePath;
   double size;
@@ -66,6 +66,24 @@ class Actor extends StatelessWidget{
       }
     });
     return com;
+  }
+}
+
+
+class ActorWidget extends StatefulWidget{
+  ActorWidget(this._offset, this._spritePath, this._size, {Key? key}) : super(key: key);
+
+  Offset _offset;
+  String _spritePath;
+  double _size;
+  Actor? brain;
+
+
+  @override
+  Actor createState(){
+    Actor _brain = Actor(_offset, _spritePath, _size);
+    this.brain = _brain;
+    return _brain;
   }
 }
 

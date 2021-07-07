@@ -62,10 +62,10 @@ abstract class GameEngine extends ChangeNotifier{
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
 
-  List<Actor> _allActors = [];
+  List<ActorWidget> _allActors = [];
   get AllActors => _allActors;
 
-  addActor(Actor actor){
+  addActor(ActorWidget actor){
     _allActors.add(actor);
   }
 
@@ -103,7 +103,7 @@ abstract class GameEngine extends ChangeNotifier{
       ++_tickCounter;
       updatePhysics(_tickCounter);
       _allActors.forEach((actor) {
-        actor.update();
+        actor.brain?.update();
       });
   }
 

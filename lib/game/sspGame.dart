@@ -46,18 +46,18 @@ class SSPEngine extends GameEngine {
   }
 
   //Spawn all the objects I need for the game
-  List<Actor> createActors(){
-    List<Actor> actors = [];
+  List<ActorWidget> createActors(){
+    List<ActorWidget> actors = [];
 
-    Actor backgroundLayer = Actor(Offset(0,0.5), "graphics/cloudLayer.png", 500); //BackgroundLayer
-    backgroundLayer.addComponent(new Paralax(backgroundLayer, 200));
+    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/cloudLayer.png", 500); //BackgroundLayer
+    backgroundLayer.brain?.addComponent(new Paralax(backgroundLayer.brain!, 200));
     actors.add(backgroundLayer);
 
 
-    Actor mainActor = Actor(Offset(0,1), "graphics/actor.png", 200); //PLAYER
-    mainActor.addComponent(new Movement(mainActor));
+    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200); //PLAYER
+    mainActor.brain?.addComponent(new Movement(mainActor.brain!));
     actors.add(mainActor);
-    _player = mainActor;
+    _player = mainActor.brain;
 
 
     return actors;
@@ -65,7 +65,7 @@ class SSPEngine extends GameEngine {
 
   //jump
   jump(){
-    _player!.GetComponent<Movement>().jump();
+    _player?.GetComponent<Movement>().jump();
   }
 
 }
