@@ -49,16 +49,14 @@ class SSPEngine extends GameEngine {
   List<ActorWidget> createActors(){
     List<ActorWidget> actors = [];
 
-    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/cloudLayer.png", 500); //BackgroundLayer
+    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/cloudLayer.png", 500, name: "BackGround"); //BackgroundLayer
     backgroundLayer.brain?.addComponent(new Paralax(backgroundLayer.brain!, 200));
     actors.add(backgroundLayer);
 
-
-    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200); //PLAYER
+    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200, name: "Player"; //PLAYER
     mainActor.brain?.addComponent(new Movement(mainActor.brain!));
     actors.add(mainActor);
     _player = mainActor.brain;
-
 
     return actors;
   }
@@ -74,7 +72,6 @@ class SSPEngine extends GameEngine {
 class SSPView extends GameView{
 
   SSPView(String title) : super(title);
-
 
   @override
   getEndOfGamePageContent(BuildContext context){

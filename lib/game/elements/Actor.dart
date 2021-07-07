@@ -15,15 +15,19 @@ class Actor extends State<ActorWidget>{
   bool _repeatImg = false;
   bool _clipImg = true;
 
+  int frame = 0;
+
 
 
 
   List<base_component?> _components;
 
-  Actor(this.offset, this.spritePath, this.size) : _components = [];
+  Actor(this.offset, this.spritePath, this.size, {this.name = ""}) : _components = [];
+
 
   @override
   Widget build(BuildContext context) {
+    print("${name}: ${offset}");
     return Align(
       alignment: Alignment(offset.dx, offset.dy), //Position of object
       child: Container( //Size of Object
@@ -40,7 +44,7 @@ class Actor extends State<ActorWidget>{
   }
 
   void setClipping(bool clip){
-
+    _clipImg = clip;
   }
 
 
@@ -48,7 +52,10 @@ class Actor extends State<ActorWidget>{
   update(){
     _components.forEach((element) {element?.update();});
     //TODO: Actor Loop - put into Abstract parent class
-    new ActorNotifyer();
+    setState(() {
+      frame++;
+      offset = Offset(offset.dx, offset.dy);
+    });
   }
 
   //Add Components via Code
@@ -71,17 +78,19 @@ class Actor extends State<ActorWidget>{
 
 
 class ActorWidget extends StatefulWidget{
-  ActorWidget(this._offset, this._spritePath, this._size, {Key? key}) : super(key: key);
+  ActorWidget(this._offset, this._spritePath, this._size, {Key? key, this.name = ""}) : super(key: key);
 
   Offset _offset;
   String _spritePath;
+  String name;
   double _size;
   Actor? brain;
 
 
+
   @override
   Actor createState(){
-    Actor _brain = Actor(_offset, _spritePath, _size);
+    Actor _brain = Actor(_offset, _spritePath, _size, name: name);
     this.brain = _brain;
     return _brain;
   }
