@@ -38,10 +38,9 @@ class Actor extends State<ActorWidget>{
       left: _offset.dx,
       child: Container( //Size of Object
         clipBehavior: Clip.none,
-        color: Colors.green,
         height: size,
         width: size,
-        child: Image(image: AssetImage(spritePath),repeat: _repeatImg ? ImageRepeat.repeatX : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
+        child: Image(image: AssetImage(spritePath),repeat: _repeatImg ? ImageRepeat.repeat : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
       ),
     );
   }

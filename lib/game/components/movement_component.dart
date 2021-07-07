@@ -8,7 +8,7 @@ class Movement extends base_component{
   int timeLastJump = 0;
   static const int maxJumpTime = 60;
   static const double jumpDivider = 20;
-  static const double fallingSpeed = -0.2;
+  static const double fallingSpeed = 10;
 
   /**
    * Component that handels the movement of the main character
@@ -18,7 +18,7 @@ class Movement extends base_component{
   @override
   update() {
     //OnGroundCheck
-    if(parent.offset.dy<=0){
+    if(parent.offset.dy>=200){
       isOnGround = true;
     }else{
       isOnGround = false;
@@ -35,7 +35,7 @@ class Movement extends base_component{
       timeLastJump++;
       if(timeLastJump<=maxJumpTime){ //Check for highest point
         double velocity = (maxJumpTime-timeLastJump)/jumpDivider; //slowly decrease velocity
-        parent.offset = Offset(parent.offset.dx, parent.offset.dy + velocity);
+        parent.offset = Offset(parent.offset.dx, parent.offset.dy + velocity*-1);
       }else{ //stop jumping when on highest point.
         isJumping = false;
         timeLastJump = 0;

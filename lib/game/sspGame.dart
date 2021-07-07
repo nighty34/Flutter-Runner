@@ -29,7 +29,6 @@ class SSPEngine extends GameEngine {
 
       createActors().forEach((element) {addActor(element);});
     }
-    _player?.offset = Offset(0, tickCounter + 0);
     updateView();
   }
 
@@ -57,9 +56,9 @@ class SSPEngine extends GameEngine {
 
     List<ActorWidget> actors = [];
 
-    /*ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/background.png", 500, name: "BackGround"); //BackgroundLayer
+    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/background.png", 500, name: "BackGround"); //BackgroundLayer
     backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, 200));
-    actors.add(backgroundLayer);*/
+    actors.add(backgroundLayer);
 
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
     mainActor.brain.addComponent(new Movement(mainActor.brain));
@@ -113,7 +112,7 @@ class SSPView extends GameView{
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
     _context = context;
-    new Timer.periodic(Duration(milliseconds: 60), rebuildAllChildren);
+    new Timer.periodic(Duration(milliseconds: 30), rebuildAllChildren);
     return Stack(
         children: [Stack(
           children: engine.AllActors,

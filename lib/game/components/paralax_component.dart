@@ -12,7 +12,7 @@ import 'package:flutter_game/game/elements/Actor.dart';
 class Paralax extends base_component{
   double _paralaxlvl;
   bool inital = true;
-  static const double movementSpeed = 1; //TODO: Tweak
+  static const double movementSpeed = 0.01; //TODO: Tweak
 
   Paralax(Actor _parent, this._paralaxlvl) : super(_parent){
 
