@@ -56,9 +56,17 @@ class SSPEngine extends GameEngine {
 
     List<ActorWidget> actors = [];
 
-    ActorWidget backgroundLayer = ActorWidget(Offset(0,0.5), "graphics/background.png", 500, name: "BackGround"); //BackgroundLayer
-    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, 200));
+    ActorWidget backgroundLayer = ActorWidget(Offset(0,0), "graphics/background.png", 450, name: "BackGround"); //BackgroundLayer
+    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, 0.001));
     actors.add(backgroundLayer);
+
+    ActorWidget houseLayer = ActorWidget(Offset(0,200), "graphics/houseLayer.png", 300, name: "HouseLayer"); //BackgroundLayer
+    houseLayer.brain.addComponent(new Paralax(houseLayer.brain, 0.3));
+    actors.add(houseLayer);
+
+    ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
+    roofLayer.brain.addComponent(new Paralax(roofLayer.brain, 1));
+    actors.add(roofLayer);
 
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
     mainActor.brain.addComponent(new Movement(mainActor.brain));

@@ -12,7 +12,7 @@ import 'package:flutter_game/game/elements/Actor.dart';
 class Paralax extends base_component{
   double _paralaxlvl;
   bool inital = true;
-  static const double movementSpeed = 0.01; //TODO: Tweak
+  static const double movementSpeed = 1; //TODO: Tweak
 
   Paralax(Actor _parent, this._paralaxlvl) : super(_parent){
 
@@ -22,7 +22,7 @@ class Paralax extends base_component{
   update() {
     if(inital){
       parent.setRepeatImg(true);
-      parent.setClipping(false);
+      parent.setClipping(true);
     }
     double movement = parent.offset.dx + (movementSpeed*_paralaxlvl);
     parent.offset = Offset(movement, parent.offset.dy);

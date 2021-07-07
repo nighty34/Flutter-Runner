@@ -18,7 +18,7 @@ class Movement extends base_component{
   @override
   update() {
     //OnGroundCheck
-    if(parent.offset.dy>=200){
+    if(parent.offset.dy>=300){
       isOnGround = true;
     }else{
       isOnGround = false;
