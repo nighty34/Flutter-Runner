@@ -27,7 +27,7 @@ class Actor extends State<ActorWidget>{
 
   @override
   Widget build(BuildContext context) {
-    print("${name}: ${offset}");
+    //print("${name}: ${offset}");
     return Align(
       alignment: Alignment(offset.dx, offset.dy), //Position of object
       child: Container( //Size of Object
@@ -78,21 +78,27 @@ class Actor extends State<ActorWidget>{
 
 
 class ActorWidget extends StatefulWidget{
-  ActorWidget(this._offset, this._spritePath, this._size, {Key? key, this.name = ""}) : super(key: key);
+  ActorWidget(this._offset, this._spritePath, this._size, {Key? key, this.name = ""}) : super(key: key){
+    this.brain = Actor(_offset, _spritePath, _size);
+  }
 
   Offset _offset;
   String _spritePath;
   String name;
   double _size;
-  Actor? brain;
+  late Actor brain;
+
 
 
 
   @override
   Actor createState(){
-    Actor _brain = Actor(_offset, _spritePath, _size, name: name);
-    this.brain = _brain;
-    return _brain;
+    if(brain==null) {
+      Actor _brain = Actor(_offset, _spritePath, _size, name: name);
+      this.brain = _brain;
+      print("Brain null");
+    }
+    return brain!;
   }
 }
 

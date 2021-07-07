@@ -32,6 +32,7 @@ class Movement extends base_component{
 
     //Jumping
     if(isJumping){
+      print("Jump");
       timeLastJump++;
       print(parent.offset.dy);
       if(timeLastJump<=maxJumpTime){ //Check for highest point

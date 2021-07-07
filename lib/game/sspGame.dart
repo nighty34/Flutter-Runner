@@ -53,7 +53,7 @@ class SSPEngine extends GameEngine {
     backgroundLayer.brain?.addComponent(new Paralax(backgroundLayer.brain!, 200));
     actors.add(backgroundLayer);
 
-    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200, name: "Player"; //PLAYER
+    ActorWidget mainActor = ActorWidget(Offset(0,1), "graphics/actor.png", 200, name: "Player"); //PLAYER
     mainActor.brain?.addComponent(new Movement(mainActor.brain!));
     actors.add(mainActor);
     _player = mainActor.brain;
@@ -63,6 +63,7 @@ class SSPEngine extends GameEngine {
 
   //jump
   jump(){
+    print(_player);
     _player?.GetComponent<Movement>().jump();
   }
 
