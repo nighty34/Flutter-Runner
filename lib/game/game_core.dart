@@ -48,7 +48,6 @@ abstract class GameView extends StatelessWidget{
         throw UnimplementedError("Invalid GameState");
     }
   }
-
 }
 
 

@@ -20,7 +20,7 @@ class Platform extends base_component{
   static const int minHeight = 500;
   static const int heightOffset = 250;
 
-  double _currentHeight = 100;
+  double _currentHeight = 500;
   double get currentHeight => _currentHeight - heightOffset;
 
 

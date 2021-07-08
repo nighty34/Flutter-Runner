@@ -8,6 +8,7 @@ import 'package:flutter_game/game/components/platform_component.dart';
 import 'package:flutter_game/game/elements/SizeProviderWidget.dart';
 import 'package:flutter_game/game/game_core.dart';
 import 'package:provider/provider.dart';
+import 'package:sensors/sensors.dart';
 
 import 'elements/Actor.dart';
 
@@ -16,6 +17,7 @@ class SSPEngine extends GameEngine {
 
   Actor? _player;
   List<Platform> _platforms = [];
+  double _input = 0;
 
   @override
   void stateChanged(GameState oldState, GameState newState) {
@@ -27,7 +29,9 @@ class SSPEngine extends GameEngine {
     if(tickCounter==1){ //onStart
       print("Start");
       createActors().forEach((element) {addActor(element);});
+      gyroscopeEvents.listen((event) {_input = event.y;});
     }
+    readSensors();
 
     double _playerPosX = _player!.offset.dx;
     double distance = double.infinity;
@@ -44,14 +48,15 @@ class SSPEngine extends GameEngine {
 
     _player!.GetComponent<Movement>().currentFloor = activePlatform!.currentHeight; //set current height
 
+    //print("${activePlatform!.currentHeight} vs ${_player!.offset.dy-50}");
     //End of Evangelion or Gameloop
-    if(activePlatform!.currentHeight >= _player!.offset.dy+2) {
+    if(activePlatform!.currentHeight <= _player!.offset.dy-50) {
       this.gameState = GameState.endOfGame;
     }
     updateView();
   }
 
-  //Weird way of handeling Inputs... hope it works
+  //Weird way of handeling Inputs... hope it works - nope but I'll keep it for jumping
   @override
   void inputHandler(List<String> commands) {
     commands.forEach((cmd) {
@@ -59,13 +64,14 @@ class SSPEngine extends GameEngine {
         case "JUMP":
           jump();
           break;
-        case "RIGHT":
-          break;
-
         default:
           return;
       }
     });
+  }
+
+  void readSensors(){
+    _player!.GetComponent<Movement>().move(_input);
   }
 
   //Spawn all the objects I need for the game
@@ -165,12 +171,15 @@ class SSPView extends GameView{
               onPressed: () => {jump(context)},
             ),
           ),
-          Container(
-            height: 10,
-            width: 10,
-            child: ListView(
-            ),
-          )],
+          Positioned(
+            left: 210,
+            height: 30,
+              width: 200,
+              child: Card(
+                child: Text("0000")
+          )
+          )
+          ],
       )
     );
   }
@@ -182,6 +191,7 @@ class SSPView extends GameView{
     rebuildAllChildren(con);
   }
 
+  //Redraw all Widgets
   void rebuildAllChildren(dynamic notused) {
     BuildContext? context = this._context;
     void rebuild(Element el) {

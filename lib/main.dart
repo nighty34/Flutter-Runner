@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: title,
         theme: ThemeData(
-
+          fontFamily: "DotGothic",
           primarySwatch: Colors.blue,
         ),
       home: game.gameView,)

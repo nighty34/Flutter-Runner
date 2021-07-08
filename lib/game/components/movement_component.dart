@@ -13,6 +13,7 @@ class Movement extends base_component{
   static const double jumpDivider = 20;
   static const double fallingSpeed = 10;
   double _currentFloor = 300;
+  final int _sensorThr = 1;
 
   /**
    * Component that handels the movement of the main character
@@ -55,6 +56,18 @@ class Movement extends base_component{
   jump(){ //Initialize jump
     if(!isJumping && isOnGround){
       isJumping = true;
+    }
+  }
+
+  move(double input){
+    if(input>=_sensorThr){
+      parent.offset = Offset(parent.offset.dx + 10, parent.offset.dy);
+      print(parent.offset.dx);
+    }
+
+    if(input<=_sensorThr*-1){
+      parent.offset = Offset(parent.offset.dx - 10, parent.offset.dy);
+      print(parent.offset.dx);
     }
   }
 
