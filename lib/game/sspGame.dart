@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -37,23 +35,28 @@ class SSPEngine extends GameEngine {
     Platform? activePlatform;
 
     _platforms.forEach((platform) {
-      //TODO: get active platform (platform Player was last on
+      //TODO: get active platform (platform Player was last on)
+      double dis = (_playerPosX - platform.parent.offset.dx).abs();
+      if(dis<distance){
+        distance=dis;
+        activePlatform = platform;
+      }
     });
+
+
+    _player!.GetComponent<Movement>().currentFloor = activePlatform!.currentHeight;
+    //print("${_playerPosX} vs ${_platforms[0].parent.offset.dx}");
+
 
     //TODO: set Players floorlvl to currentPlatform
 
-    //End of Evangelion or Gameloop
-    if(activePlatform!.currentHeight >= _player!.offset.dy+2){
-      stateChanged(GameState.running, GameState.endOfGame);
-    }
 
+    //End of Evangelion or Gameloop
+    /*if(activePlatform!.currentHeight >= _player!.offset.dy+2){
+      stateChanged(GameState.running, GameState.endOfGame);
+    }*/
     updateView();
   }
-
-
-
-
-
 
   //Weird way of handeling Inputs... hope it works
   @override
@@ -91,6 +94,15 @@ class SSPEngine extends GameEngine {
     _platforms.add(platform);
     actors.add(roofLayer);
 
+    ActorWidget roofLayer2 = ActorWidget(Offset(500,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
+    Platform platform2 = new Platform(roofLayer2.brain);
+    roofLayer2.brain.addComponent(platform2);
+    roofLayer2.brain.addComponent(new Paralax(roofLayer2.brain, -4, () => {platform2.generateNew()}));
+    _platforms.add(platform2);
+    actors.add(roofLayer2);
+
+
+
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
     mainActor.brain.addComponent(new Movement(mainActor.brain));
     actors.add(mainActor);
@@ -100,13 +112,11 @@ class SSPEngine extends GameEngine {
   }
 
 
-
   //jump
   jump(){
     _player?.GetComponent<Movement>().jump();
   }
 }
-
 
 class SSPView extends GameView{
 

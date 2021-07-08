@@ -9,6 +9,7 @@ class Movement extends base_component{
   static const int maxJumpTime = 60;
   static const double jumpDivider = 20;
   static const double fallingSpeed = 10;
+  double _currentFloor = 300;
 
   /**
    * Component that handels the movement of the main character
@@ -18,7 +19,7 @@ class Movement extends base_component{
   @override
   update() {
     //OnGroundCheck
-    if(parent.offset.dy>=300){
+    if(parent.offset.dy>=_currentFloor){
       isOnGround = true;
     }else{
       isOnGround = false;
@@ -50,4 +51,9 @@ class Movement extends base_component{
     }
   }
 
+  double get currentFloor => _currentFloor;
+
+  set currentFloor(double value) {
+    _currentFloor = value;
+  }
 }

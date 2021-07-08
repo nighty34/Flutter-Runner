@@ -18,9 +18,10 @@ class Platform extends base_component{
 
   static const int maxHeight = 700;
   static const int minHeight = 500;
+  static const int heightOffset = 250;
 
-  int _currentHeight = 0;
-  int get currentHeight => _currentHeight;
+  double _currentHeight = 100;
+  double get currentHeight => _currentHeight - heightOffset;
 
   @override
   update() {
@@ -28,10 +29,9 @@ class Platform extends base_component{
   }
 
   void generateNew(){
-        int newHeight = (_random.nextInt(maxHeight-minHeight)+minHeight).round();
-      _currentHeight = newHeight;
+      int newHeight = (_random.nextInt(maxHeight-minHeight)+minHeight).round();
+      _currentHeight = newHeight + 0;
       parent.offset = new Offset(parent.offset.dx, newHeight + 0);
-      print("NEW HEIGHT");
   }
 
 
