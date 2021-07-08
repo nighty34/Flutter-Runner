@@ -66,6 +66,7 @@ abstract class GameEngine with ChangeNotifier{
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
   static Size? _gameSize; //ScreenSize
+  int _score = 0;
 
   List<ActorWidget> _allActors = [];
 
@@ -136,4 +137,9 @@ abstract class GameEngine with ChangeNotifier{
 
   static Size get gameSize => _gameSize!;
 
+  int get score => _score;
+
+  set score(int value) {
+    _score = value;
+  }
 }

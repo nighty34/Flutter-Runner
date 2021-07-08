@@ -32,6 +32,7 @@ class SSPEngine extends GameEngine {
       gyroscopeEvents.listen((event) {_input = event.y;});
     }
     readSensors();
+    this.score=tickCounter;
 
     double _playerPosX = _player!.offset.dx;
     double distance = double.infinity;
@@ -48,7 +49,6 @@ class SSPEngine extends GameEngine {
 
     _player!.GetComponent<Movement>().currentFloor = activePlatform!.currentHeight; //set current height
 
-    //print("${activePlatform!.currentHeight} vs ${_player!.offset.dy-50}");
     //End of Evangelion or Gameloop
     if(activePlatform!.currentHeight <= _player!.offset.dy-50) {
       this.gameState = GameState.endOfGame;
@@ -87,7 +87,6 @@ class SSPEngine extends GameEngine {
     ActorWidget houseLayer = ActorWidget(Offset(0,200), "graphics/houseLayer.png", 300, name: "HouseLayer"); //BackgroundLayer
     houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3, () => {}));
     actors.add(houseLayer);
-
 
     //Platform
     ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
@@ -155,6 +154,8 @@ class SSPView extends GameView{
   Widget getRunningPageContent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
     _context = context;
+
+    String score = "${engine.score}";
     new Timer.periodic(Duration(milliseconds: 30), rebuildAllChildren);
     return SizeProviderWidget(onChildSize: (size) {
       engine.setGameSize(size!);
@@ -176,7 +177,7 @@ class SSPView extends GameView{
             height: 30,
               width: 200,
               child: Card(
-                child: Text("0000")
+                child: Text(score)
           )
           )
           ],

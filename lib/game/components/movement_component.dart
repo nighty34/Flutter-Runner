@@ -59,7 +59,8 @@ class Movement extends base_component{
     }
   }
 
-  move(double input){
+  //TODO: limit Movement
+  move(double input){ //move sideways
     if(input>=_sensorThr){
       parent.offset = Offset(parent.offset.dx + 10, parent.offset.dy);
       print(parent.offset.dx);

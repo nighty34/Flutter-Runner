@@ -32,7 +32,7 @@ class Platform extends base_component{
 
 
   @override
-  update() {}
+  update() {}//unused
 
   //Get a new random height
   void generateNew(){
