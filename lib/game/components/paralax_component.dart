@@ -15,7 +15,7 @@ class Paralax extends base_component{
   bool inital = true; //onStart?
   final Function _onRedraw;
   static const double movementSpeed = 1;
-  int i = 10; //FIXME: My way of triggering on Frame 11
+  int i = 10; //My way of starting on Frame 11
 
 
   Paralax(Actor _parent, this._paralaxlvl, this._onRedraw) : super(_parent){}

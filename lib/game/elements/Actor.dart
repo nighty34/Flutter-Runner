@@ -93,7 +93,6 @@ class Actor extends State<ActorWidget>{
   }
 }
 
-
 class ActorWidget extends StatefulWidget{
   ActorWidget(this._offset, this._spritePath, this._size, {Key? key, this.name = ""}) : super(key: key){
     this.brain = Actor(_offset, _spritePath, _size);
