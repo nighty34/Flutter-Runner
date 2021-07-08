@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_game/game/components/movement_component.dart';
 import 'package:flutter_game/game/components/paralax_component.dart';
+import 'package:flutter_game/game/elements/SizeProviderWidget.dart';
 import 'package:flutter_game/game/game_core.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,12 @@ class SSPEngine extends GameEngine {
     updateView();
   }
 
- //Weird way of handeling Inputs... hope it works
+
+
+
+
+
+  //Weird way of handeling Inputs... hope it works
   @override
   void inputHandler(List<String> commands) {
     commands.forEach((cmd) {
@@ -89,7 +95,6 @@ class SSPView extends GameView{
 
   SSPView(String title) : super(title);
   BuildContext? _context;
-  Size? _gameSize;
 
   @override
   getEndOfGamePageContent(BuildContext context){
@@ -121,7 +126,10 @@ class SSPView extends GameView{
     GameEngine engine = Provider.of<GameEngine>(context);
     _context = context;
     new Timer.periodic(Duration(milliseconds: 30), rebuildAllChildren);
-    return Stack(
+    return SizeProviderWidget(onChildSize: (size) {
+      engine.setGameSize(size!);
+    },
+        child: Stack(
         children: [Stack(
           children: engine.AllActors,
         ),
@@ -139,6 +147,7 @@ class SSPView extends GameView{
             child: ListView(
             ),
           )],
+      )
     );
   }
 

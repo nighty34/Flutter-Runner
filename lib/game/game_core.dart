@@ -61,6 +61,14 @@ abstract class GameEngine with ChangeNotifier{
   GameState _gameState;
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
+  static Size? _gameSize;
+
+
+  setGameSize(Size value) {
+    _gameSize = value;
+  }
+
+  static Size get gameSize => _gameSize!;
 
   List<ActorWidget> _allActors = [];
   get AllActors => _allActors;
@@ -105,6 +113,7 @@ abstract class GameEngine with ChangeNotifier{
         actor.brain.update();
       });
   }
+
 
 
 
