@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_game/game/components/movement_component.dart';
 import 'package:flutter_game/game/components/paralax_component.dart';
+import 'package:flutter_game/game/components/platform_component.dart';
 import 'package:flutter_game/game/elements/SizeProviderWidget.dart';
 import 'package:flutter_game/game/game_core.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ import 'elements/Actor.dart';
 class SSPEngine extends GameEngine {
 
   Actor? _player;
+  List<Platform> _platforms = [];
 
   @override
   void stateChanged(GameState oldState, GameState newState) {
@@ -27,9 +29,24 @@ class SSPEngine extends GameEngine {
     super.updatePhysics(tickCounter);
     if(tickCounter==1){
       print("Start");
-
       createActors().forEach((element) {addActor(element);});
     }
+
+    double _playerPosX = _player!.offset.dx;
+    double distance = double.infinity;
+    Platform? activePlatform;
+
+    _platforms.forEach((platform) {
+      //TODO: get active platform (platform Player was last on
+    });
+
+    //TODO: set Players floorlvl to currentPlatform
+
+    //End of Evangelion or Gameloop
+    if(activePlatform!.currentHeight >= _player!.offset.dy+2){
+      stateChanged(GameState.running, GameState.endOfGame);
+    }
+
     updateView();
   }
 
@@ -58,20 +75,20 @@ class SSPEngine extends GameEngine {
   //Spawn all the objects I need for the game
   List<ActorWidget> createActors(){
 
-
-
     List<ActorWidget> actors = [];
 
     ActorWidget backgroundLayer = ActorWidget(Offset(0,0), "graphics/background.png", 450, name: "BackGround"); //BackgroundLayer
-    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, -0.001));
     actors.add(backgroundLayer);
 
     ActorWidget houseLayer = ActorWidget(Offset(0,200), "graphics/houseLayer.png", 300, name: "HouseLayer"); //BackgroundLayer
-    houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3));
+    houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3, () => {}));
     actors.add(houseLayer);
 
     ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
-    roofLayer.brain.addComponent(new Paralax(roofLayer.brain, -1));
+    Platform platform = new Platform(roofLayer.brain);
+    roofLayer.brain.addComponent(platform);
+    roofLayer.brain.addComponent(new Paralax(roofLayer.brain, -4, () => {platform.generateNew()}));
+    _platforms.add(platform);
     actors.add(roofLayer);
 
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
