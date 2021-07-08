@@ -57,15 +57,15 @@ class SSPEngine extends GameEngine {
     List<ActorWidget> actors = [];
 
     ActorWidget backgroundLayer = ActorWidget(Offset(0,0), "graphics/background.png", 450, name: "BackGround"); //BackgroundLayer
-    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, 0.001));
+    backgroundLayer.brain.addComponent(new Paralax(backgroundLayer.brain, -0.001));
     actors.add(backgroundLayer);
 
     ActorWidget houseLayer = ActorWidget(Offset(0,200), "graphics/houseLayer.png", 300, name: "HouseLayer"); //BackgroundLayer
-    houseLayer.brain.addComponent(new Paralax(houseLayer.brain, 0.3));
+    houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3));
     actors.add(houseLayer);
 
     ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
-    roofLayer.brain.addComponent(new Paralax(roofLayer.brain, 1));
+    roofLayer.brain.addComponent(new Paralax(roofLayer.brain, -1));
     actors.add(roofLayer);
 
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
@@ -82,13 +82,14 @@ class SSPEngine extends GameEngine {
   jump(){
     _player?.GetComponent<Movement>().jump();
   }
-
 }
 
 
 class SSPView extends GameView{
 
   SSPView(String title) : super(title);
+  BuildContext? _context;
+  Size? _gameSize;
 
   @override
   getEndOfGamePageContent(BuildContext context){
@@ -114,7 +115,6 @@ class SSPView extends GameView{
         ));
   }
 
-  BuildContext? _context;
 
   @override
   Widget getRunningPageContent(BuildContext context) {
@@ -139,7 +139,6 @@ class SSPView extends GameView{
             child: ListView(
             ),
           )],
-
     );
   }
 
