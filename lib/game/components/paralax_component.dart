@@ -12,20 +12,28 @@ import 'package:flutter_game/game/game_core.dart';
  */
 class Paralax extends base_component{
   double _paralaxlvl;
-  bool inital = true;
+  bool inital = true; //onStart?
   final Function _onRedraw;
-  static const double movementSpeed = 1; //TODO: Tweak
-  int i = 10;
+  static const double movementSpeed = 1;
+  int i = 10; //FIXME: My way of triggering on Frame 11
 
-  Paralax(Actor _parent, this._paralaxlvl, this._onRedraw) : super(_parent){
-  }
+
+  Paralax(Actor _parent, this._paralaxlvl, this._onRedraw) : super(_parent){}
+
+
+  /*
+  =============================
+  METHDOS
+  =============================
+   */
 
   @override
   update() {
-    if(inital){
+    if(inital){ //onStart
       parent.setRepeatImg(true);
       parent.setClipping(true);
     }
+
     double movement = parent.offset.dx + (movementSpeed*_paralaxlvl);
     parent.offset = Offset(movement, parent.offset.dy);
     if(i<=0 && parent.offset.dx*-1>=GameEngine.gameSize.width){

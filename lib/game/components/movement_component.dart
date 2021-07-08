@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_game/game/components/base_component.dart';
 import 'package:flutter_game/game/elements/Actor.dart';
 
+/**
+ * Movement Controller - moves the Actor based on inputs
+ */
 class Movement extends base_component{
   bool isJumping = false;
   bool isOnGround = false;
@@ -16,6 +19,12 @@ class Movement extends base_component{
    */
   Movement(Actor parent) : super(parent); //Component Constructor
 
+
+  /*
+  =============================
+  METHODS
+  =============================
+   */
   @override
   update() {
     //OnGroundCheck
@@ -24,7 +33,6 @@ class Movement extends base_component{
     }else{
       isOnGround = false;
     }
-    //TODO: Check for actual ground - or work around a collision system
 
     //Gravity
     if(!isOnGround && !isJumping){
@@ -44,12 +52,19 @@ class Movement extends base_component{
     }
   }
 
-
   jump(){ //Initialize jump
     if(!isJumping && isOnGround){
       isJumping = true;
     }
   }
+
+
+  /*
+  =============================
+  GETTER AND SETTER
+  =============================
+   */
+
 
   double get currentFloor => _currentFloor;
 

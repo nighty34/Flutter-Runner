@@ -12,10 +12,10 @@ class Game {
 }
 
 
-
+/**
+ * Abstract GameView
+ */
 abstract class GameView extends StatelessWidget{
-
-
   Widget getStartPageConent(BuildContext context);
   Widget getRunningPageContent(BuildContext context);
   Widget getEndOfGamePageContent(BuildContext context);
@@ -34,11 +34,12 @@ abstract class GameView extends StatelessWidget{
       body: _getPageContents(context, game),
     );
   }
-  
+
+  //Get the right Content
   Widget _getPageContents(BuildContext context, GameEngine game){
     switch (game.gameState) {
       case GameState.waitForStart:
-        return getStartPageConent(context);
+        return getStartPageConent(context); //or Conent
       case GameState.running:
         return getRunningPageContent(context);
       case GameState.endOfGame:
@@ -51,31 +52,24 @@ abstract class GameView extends StatelessWidget{
 }
 
 
-
+//Gamestates
 enum GameState {
   waitForStart, running, endOfGame
 }
 
+
+/**
+ * Abstract GameEngine - Handels some stuff in the background
+ */
 abstract class GameEngine with ChangeNotifier{
   Timer? _timer;
   GameState _gameState;
   int _tickCounter;
   GameEngine() : _gameState = GameState.waitForStart, _tickCounter = 0;
-  static Size? _gameSize;
-
-
-  setGameSize(Size value) {
-    _gameSize = value;
-  }
-
-  static Size get gameSize => _gameSize!;
+  static Size? _gameSize; //ScreenSize
 
   List<ActorWidget> _allActors = [];
-  get AllActors => _allActors;
 
-  addActor(ActorWidget actor){
-    _allActors.add(actor);
-  }
 
   void stateChanged(GameState oldState, GameState newState);
 
@@ -114,9 +108,6 @@ abstract class GameEngine with ChangeNotifier{
       });
   }
 
-
-
-
   void updatePhysics(int tickCounter){
 
   }
@@ -125,7 +116,25 @@ abstract class GameEngine with ChangeNotifier{
 
   }
 
+
+  /*
+  =============================
+  GETTER AND SETTER
+  =============================
+   */
+
+  get AllActors => _allActors;
+
+  addActor(ActorWidget actor){
+    _allActors.add(actor);
+  }
+
   int get tickCounter => _tickCounter;
 
+  setGameSize(Size value) {
+    _gameSize = value;
+  }
+
+  static Size get gameSize => _gameSize!;
 
 }

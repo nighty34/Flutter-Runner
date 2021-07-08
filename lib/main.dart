@@ -30,12 +30,4 @@ class MyApp extends StatelessWidget {
       home: game.gameView,)
     );
   }
-
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-    (context as Element).visitChildren(rebuild);
-  }
 }

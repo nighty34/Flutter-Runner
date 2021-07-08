@@ -19,13 +19,12 @@ class SSPEngine extends GameEngine {
 
   @override
   void stateChanged(GameState oldState, GameState newState) {
-    // TODO: implement stateChanged
   }
 
   @override
   void updatePhysics(int tickCounter) {
     super.updatePhysics(tickCounter);
-    if(tickCounter==1){
+    if(tickCounter==1){ //onStart
       print("Start");
       createActors().forEach((element) {addActor(element);});
     }
@@ -34,8 +33,8 @@ class SSPEngine extends GameEngine {
     double distance = double.infinity;
     Platform? activePlatform;
 
+    //Get Active Platform
     _platforms.forEach((platform) {
-      //TODO: get active platform (platform Player was last on)
       double dis = (_playerPosX - platform.parent.offset.dx).abs();
       if(dis<distance){
         distance=dis;
@@ -43,18 +42,12 @@ class SSPEngine extends GameEngine {
       }
     });
 
-
-    _player!.GetComponent<Movement>().currentFloor = activePlatform!.currentHeight;
-    //print("${_playerPosX} vs ${_platforms[0].parent.offset.dx}");
-
-
-    //TODO: set Players floorlvl to currentPlatform
-
+    _player!.GetComponent<Movement>().currentFloor = activePlatform!.currentHeight; //set current height
 
     //End of Evangelion or Gameloop
-    /*if(activePlatform!.currentHeight >= _player!.offset.dy+2){
-      stateChanged(GameState.running, GameState.endOfGame);
-    }*/
+    if(activePlatform!.currentHeight >= _player!.offset.dy+2) {
+      this.gameState = GameState.endOfGame;
+    }
     updateView();
   }
 
@@ -80,13 +73,17 @@ class SSPEngine extends GameEngine {
 
     List<ActorWidget> actors = [];
 
+    //BackGround
     ActorWidget backgroundLayer = ActorWidget(Offset(0,0), "graphics/background.png", 450, name: "BackGround"); //BackgroundLayer
     actors.add(backgroundLayer);
 
+    //BackgroundLayer
     ActorWidget houseLayer = ActorWidget(Offset(0,200), "graphics/houseLayer.png", 300, name: "HouseLayer"); //BackgroundLayer
     houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3, () => {}));
     actors.add(houseLayer);
 
+
+    //Platform
     ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
     Platform platform = new Platform(roofLayer.brain);
     roofLayer.brain.addComponent(platform);
@@ -94,6 +91,7 @@ class SSPEngine extends GameEngine {
     _platforms.add(platform);
     actors.add(roofLayer);
 
+    //Platform
     ActorWidget roofLayer2 = ActorWidget(Offset(500,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
     Platform platform2 = new Platform(roofLayer2.brain);
     roofLayer2.brain.addComponent(platform2);
@@ -101,8 +99,7 @@ class SSPEngine extends GameEngine {
     _platforms.add(platform2);
     actors.add(roofLayer2);
 
-
-
+    //Player
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
     mainActor.brain.addComponent(new Movement(mainActor.brain));
     actors.add(mainActor);

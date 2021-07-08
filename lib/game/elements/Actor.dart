@@ -12,25 +12,23 @@ import 'package:flutter_game/game/components/base_component.dart';
 class Actor extends State<ActorWidget>{
   String spritePath;
   double size;
-  String? name; //TODO: Optional?
+  String? name; //Optional
   bool _repeatImg = false;
   bool _clipImg = true;
   Offset _offset;
-
-  int frame = 0;
-
-
-  Offset get offset => _offset;
-
-  set offset(Offset value) {
-    _offset = value;
-  }
+  int frame = 0; //FIXME: Unused
 
   List<base_component?> _components;
 
   Actor(this._offset, this.spritePath, this.size, {this.name = ""}) : _components = [];
 
+  /*
+  =============================
+  WIDGET
+  =============================
+   */
 
+//Build Widget
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -45,19 +43,15 @@ class Actor extends State<ActorWidget>{
     );
   }
 
-  void setRepeatImg(bool repeat) {
-    _repeatImg = repeat;
-  }
-
-  void setClipping(bool clip){
-    _clipImg = clip;
-  }
-
+  /*
+  =============================
+  Methods
+  =============================
+   */
 
    //Classic update function
   update(){
     _components.forEach((comp) {comp?.update();});
-    //TODO: Actor Loop - put into Abstract parent class
   }
 
   //Add Components via Code
@@ -76,6 +70,27 @@ class Actor extends State<ActorWidget>{
     });
     return com;
   }
+
+
+  /*
+  =============================
+  GETTER AND SETTER
+  =============================
+   */
+
+  void setRepeatImg(bool repeat) {
+    _repeatImg = repeat;
+  }
+
+  void setClipping(bool clip){
+    _clipImg = clip;
+  }
+
+  Offset get offset => _offset;
+
+  set offset(Offset value) {
+    _offset = value;
+  }
 }
 
 
@@ -83,15 +98,11 @@ class ActorWidget extends StatefulWidget{
   ActorWidget(this._offset, this._spritePath, this._size, {Key? key, this.name = ""}) : super(key: key){
     this.brain = Actor(_offset, _spritePath, _size);
   }
-
   Offset _offset;
   String _spritePath;
   String name;
   double _size;
   late Actor brain;
-
-
-
 
   @override
   Actor createState(){
