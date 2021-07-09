@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_game/game/components/base_component.dart';
 import 'package:flutter_game/game/elements/Actor.dart';
 
@@ -56,6 +57,7 @@ class Movement extends base_component{
   jump(){ //Initialize jump
     if(!isJumping && isOnGround){
       isJumping = true;
+      HapticFeedback.vibrate();
     }
   }
 
