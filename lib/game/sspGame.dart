@@ -88,6 +88,11 @@ class SSPEngine extends GameEngine {
     houseLayer.brain.addComponent(new Paralax(houseLayer.brain, -0.3, () => {}));
     actors.add(houseLayer);
 
+    //BackGroundLayer
+    ActorWidget houseLayer2 = ActorWidget(Offset(300,200), "graphics/houseLayer.png", 300, name: "HouseLayer2"); //BackgroundLayer
+    houseLayer2.brain.addComponent(new Paralax(houseLayer2.brain, -0.3, () => {}));
+    actors.add(houseLayer2);
+
     //Platform
     ActorWidget roofLayer = ActorWidget(Offset(0,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
     Platform platform = new Platform(roofLayer.brain);
@@ -97,7 +102,7 @@ class SSPEngine extends GameEngine {
     actors.add(roofLayer);
 
     //Platform
-    ActorWidget roofLayer2 = ActorWidget(Offset(500,550), "graphics/houseTop.png", 400, name: "RoofLayer"); //BackgroundLayer
+    ActorWidget roofLayer2 = ActorWidget(Offset(600,550), "graphics/houseTop.png", 400, name: "RoofLayer2"); //BackgroundLayer
     Platform platform2 = new Platform(roofLayer2.brain);
     roofLayer2.brain.addComponent(platform2);
     roofLayer2.brain.addComponent(new Paralax(roofLayer2.brain, -4, () => {platform2.generateNew()}));
@@ -140,13 +145,20 @@ class SSPView extends GameView{
   @override
   Widget getStartPageConent(BuildContext context) {
     GameEngine engine = Provider.of<GameEngine>(context);
-    return ElevatedButton(
-        onPressed: () => {engine.gameState = GameState.running},
-        child: Column(
-          children: [
-            Text('Start Game')
-          ],
-        ));
+    return Center(
+      child: Container(
+        height: 80,
+        width: 200,
+        child:ElevatedButton(
+          onPressed: () => {engine.gameState = GameState.running},
+          child: Column(
+            children: [
+              Center(child: Text('Start Game'),)
+            ],
+          ),
+        )
+      ),
+    );
   }
 
 

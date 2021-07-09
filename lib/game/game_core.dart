@@ -94,6 +94,7 @@ abstract class GameEngine with ChangeNotifier{
 
   void _stopGameLoop() {
     _timer?.cancel(); //eq. if(_timer!=null) {_timer.cancel();}
+    _allActors = [];
   }
 
   void updateView() {

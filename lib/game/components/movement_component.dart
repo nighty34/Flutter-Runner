@@ -81,7 +81,6 @@ class Movement extends base_component{
   =============================
    */
 
-
   double get currentFloor => _currentFloor;
 
   set currentFloor(double value) {
