@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_game/game/components/animation_component.dart';
 import 'package:flutter_game/game/components/movement_component.dart';
 import 'package:flutter_game/game/components/paralax_component.dart';
 import 'package:flutter_game/game/components/platform_component.dart';
@@ -112,6 +113,7 @@ class SSPEngine extends GameEngine {
     //Player
     ActorWidget mainActor = ActorWidget(Offset(0,-1), "graphics/player.png", 300, name: "Player"); //PLAYER
     mainActor.brain.addComponent(new Movement(mainActor.brain));
+    mainActor.brain.addComponent(new Animator(mainActor.brain, "graphics/Einzelbild", 19, 4));
     actors.add(mainActor);
     _player = mainActor.brain;
 
@@ -133,13 +135,29 @@ class SSPView extends GameView{
   @override
   getEndOfGamePageContent(BuildContext context){
     GameEngine engine = Provider.of<GameEngine>(context);
-    return ElevatedButton(
-        onPressed: () => {engine.gameState = GameState.running},
-        child: Column(
-        children: [
-          Text('Restart Game')
-      ],
-    ));
+    String score = "Dein Score: ${engine.score}";
+    return Stack(children: [
+      Center(
+        child: Container(
+          height: 80,
+          width: 200,
+          child: ElevatedButton(
+            onPressed: () => {engine.gameState = GameState.running},
+            child: Column(
+             children: [
+                Center(child: Text('Restart Game'),)
+              ],
+            ),
+          ),
+        ),
+      ),
+      Center(
+        heightFactor: 10,
+        child: Card(
+            child: Text(score, style: TextStyle(fontSize: 30),)
+        )
+      )
+    ]);
   }
 
   @override
@@ -190,9 +208,8 @@ class SSPView extends GameView{
               width: 200,
               child: Card(
                 child: Text(score)
-          )
-          )
-          ],
+            )
+          )],
       )
     );
   }

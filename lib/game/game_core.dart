@@ -89,6 +89,7 @@ abstract class GameEngine with ChangeNotifier{
   void _startGameLoop() {
     _stopGameLoop();
     _tickCounter = 0;
+    _score = 0;
     _timer = new Timer.periodic(Duration(milliseconds: 20), _processTick);
   }
 

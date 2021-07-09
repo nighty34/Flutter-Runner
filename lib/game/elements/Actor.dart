@@ -10,7 +10,7 @@ import 'package:flutter_game/game/components/base_component.dart';
  * Master-Class for all the objects on the playingfield - planning on adding an additonal abstract layer infront of this class
  */
 class Actor extends State<ActorWidget>{
-  String spritePath;
+  String _spritePath;
   double size;
   String? name; //Optional
   bool _repeatImg = false;
@@ -20,7 +20,7 @@ class Actor extends State<ActorWidget>{
 
   List<base_component?> _components;
 
-  Actor(this._offset, this.spritePath, this.size, {this.name = ""}) : _components = [];
+  Actor(this._offset, this._spritePath, this.size, {this.name = ""}) : _components = [];
 
   /*
   =============================
@@ -38,7 +38,7 @@ class Actor extends State<ActorWidget>{
         clipBehavior: Clip.none,
         height: size,
         width: size,
-        child: Image(image: AssetImage(spritePath),repeat: _repeatImg ? ImageRepeat.repeat : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
+        child: Image(image: AssetImage(_spritePath),repeat: _repeatImg ? ImageRepeat.repeat : ImageRepeat.noRepeat, fit: _clipImg ? BoxFit.fitHeight : BoxFit.none),
       ),
     );
   }
@@ -90,6 +90,10 @@ class Actor extends State<ActorWidget>{
 
   set offset(Offset value) {
     _offset = value;
+  }
+
+  set spritePath(String value) {
+    _spritePath = value;
   }
 }
 
